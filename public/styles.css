@@ -1,0 +1,65 @@
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+    margin: 0;
+    font-family: roboto, "sans-serif";
+}
+
+.filters {
+    background-color: rgba(255, 0, 0, 0.2);
+}
+
+.categories {
+    background-color: rgba(0, 255, 255, 0.5);
+}
+
+.products {
+    background-color: rgba(0, 128, 0, 0.4);
+    padding: 20px;
+}
+
+table {
+    border-collapse: collapse;
+    border: 2px solid black;
+    letter-spacing: .5px;
+}
+
+caption {
+    font-weight: bold;
+    padding: 10px;
+}
+
+th,
+td {
+    border: 1px solid black;
+    padding: 8px 14px;
+}
+
+th {
+    border-bottom: 2px solid black;
+}
+
+td img {
+    height: 16px;
+}
+
+td div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+thead > tr {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+tbody>tr:nth-last-of-type(even) {
+    background-color: rgba(0, 0, 0, 0.06);
+}
+
+/*-- Body Type --*/
+
+.type:hover {
+background-color: rgba(0, 0, 0, 0.15);
+}

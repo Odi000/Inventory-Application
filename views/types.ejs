@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('htmlHead')  %>
+
+<body>
+  <h1>Body Type</h1>
+  <div class="type-container">
+    <% for(const el of bodyTypes) {%>
+    <div class="type" data-id="<%= el.id  %>">
+      <a href="#"><button>Edit</button></a>
+      <a href="#"><button>Delete</button></a>
+      <p><%= el.name %></p>
+    </div>
+    <% } %>
+  </div>
+</body>
+<script>
+  const typeElements = document.querySelectorAll('.type');
+  console.log([...typeElements])
+
+  typeElements.forEach(el => el.addEventListener('click', showCars));
+
+  function showCars(e) {
+    const bodyTypeID = e.currentTarget.dataset.id
+    if(e.target, e.target.localName === 'button') return;
+    location.href = '/inventory/body-type/' + bodyTypeID;
+  }
+</script>
+
+</html>

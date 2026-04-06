@@ -32,17 +32,42 @@ const models = [
     { "model": "Enyaq", "brand_id": 6, "body_type_id": 3 }
 ]
 
-populateBrandsTable("model", models);
+const addColumnPrice = [
+    { "id": 1, "model": "Corolla", "price": 32500 },
+    { "id": 2, "model": "Camry", "price": 45800 },
+    { "id": 3, "model": "RAV4", "price": 41200 },
+    { "id": 4, "model": "Prius", "price": 43900 },
+    { "id": 5, "model": "Model 3", "price": 42990 },
+    { "id": 6, "model": "Model Y", "price": 44990 },
+    { "id": 7, "model": "Model S", "price": 94990 },
+    { "id": 8, "model": "Model X", "price": 101990 },
+    { "id": 9, "model": "3 Series", "price": 55200 },
+    { "id": 10, "model": "5 Series", "price": 66400 },
+    { "id": 11, "model": "X5", "price": 89300 },
+    { "id": 12, "model": "M4", "price": 115000 },
+    { "id": 13, "model": "F-150", "price": 82000 },
+    { "id": 14, "model": "Mustang", "price": 59900 },
+    { "id": 15, "model": "Explorer", "price": 48500 },
+    { "id": 16, "model": "Escape", "price": 36200 },
+    { "id": 17, "model": "S-Class", "price": 112000 },
+    { "id": 18, "model": "C-Class", "price": 52400 },
+    { "id": 19, "model": "GLE", "price": 85600 },
+    { "id": 20, "model": "EQS", "price": 109500 },
+    { "id": 21, "model": "Octavia", "price": 30800 },
+    { "id": 22, "model": "Superb", "price": 41500 },
+    { "id": 23, "model": "Kodiaq", "price": 43200 },
+    { "id": 24, "model": "Enyaq", "price": 48900 }
+]
 
 async function populateBrandsTable(table, dataArray) {
     try {
         await client.connect();
         console.log('Connected to PostgreSQL');
 
-        for (const el of models) {
+        for (const el of dataArray) {
             await client.query(
-                `INSERT INTO ${table} (name, body_type_id, brand_id) VALUES ($1,$2,$3);`,
-                [el.model, el.body_type_id, el.brand_id]
+                `UPDATE ${table} SET price = $1 WHERE id = $2;`,
+                [el.price, el.id]
             );
         }
     } catch (err) {

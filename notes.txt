@@ -3,4 +3,6 @@ body (id,type)
 model (id,name,body_type_id,brand_id)
 
 
-inventory_application=# SELECT model.id, model.name AS model, body.name AS body_type, brands.name AS brand FROM model INNER JOIN body ON model.body_type_id = body.id INNER JOIN brands ON model.brand_id = brands.id;
+SELECT model.id, model.name AS model, body.name AS body_type, brands.name AS brand FROM model INNER JOIN body ON model.body_type_id = body.id INNER JOIN brands ON model.brand_id = brands.id;
+
+SELECT model.name AS model, body.name AS body, brands.name AS brand FROM model INNER JOIN body ON model.body_type_id = body.id INNER JOIN brands ON model.brand_id = brands.id;

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('htmlHead')  %>
+
+<body>
+  <h1>Inventory</h1>
+  <section>
+    <div class="filters"></div>
+    <div class="categories">
+        <a href="/body-type"><button>Body type</button></a>
+        <a href="/brands"><button>Brand</button></a>
+    </div>
+    <div class="products">
+      <table>
+        <caption>Car Inventory</caption>
+        <thead>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
+          <% for(const prop in locals.products[0]){ %>
+          <% const colName = prop[0].toUpperCase()+prop.slice(1) %>
+          <th scope="col"><%= colName %></th>
+          <% } %>
+        </thead>
+        <tbody>
+          <% for(const el of locals.products) {%>
+          <tr>
+            <td><div><img src="/images/pencil.png" alt="Edit"></div></td>
+            <td class="delete"><div><img src="/images/trash.png" alt="Deleteu"></div></td>
+            <% for(const prop in el) {%>
+            <% if(prop==='price') {%>
+            <td><%= '€ '+ el[prop] %></td>
+            <% } else {%>
+            <td><%= el[prop] %></td>
+            <% } %>
+            <% } %>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</body>
+
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('htmlHead')  %>
+
+<body>
+
+  <h1>Brands</h1>
+  <div class="type-container">
+    <% for(const brand of brands) {%>
+    <div class="type" data-id="<%= brand.id  %>">
+      <button class="editBtn">Edit</button>
+      <button>Delete</button>
+      <p><%= brand.name %></p>
+    </div>
+    <% } %>
+  </div>
+
+</body>
+
+<script>
+  //Brand selection
+  const brandElements = document.querySelectorAll('.type');
+  brandElements.forEach(el => el.addEventListener('click', handleBrandClick));
+
+  function handleBrandClick(e) {
+    const brandID = e.currentTarget.dataset.id
+    if (e.target.localName === 'button') return;
+    location.href = '/inventory/brands/' + brandID;
+  }
+
+  //Brand edit 
+  const editBtns = [...document.querySelectorAll('.editBtn')];
+  editBtns.forEach(el => el.addEventListener('click', handleEditClick));
+
+  function handleEditClick(e) {
+    const parentNode = e.currentTarget.parentNode
+    parentNode.removeEventListener('click', handleBrandClick);
+
+    const currentValue = parentNode.childNodes[5].textContent;
+    const brandId = parentNode.dataset.id;
+
+    parentNode.innerHTML = '';
+    const form = document.createElement('form');
+    const input = document.createElement('input');
+    const submitBtn = document.createElement('button');
+
+    form.action = 'brands/update/' + brandId;
+    form.method = 'POST';
+    input.id = 'brandName';
+    input.name = 'brandName';
+    input.type = 'text';
+    input.value = currentValue;
+    submitBtn.textContent = 'Submit';
+
+    form.appendChild(input);
+    form.appendChild(submitBtn);
+
+    parentNode.appendChild(form);
+  }
+</script>
+
+
+</html>
