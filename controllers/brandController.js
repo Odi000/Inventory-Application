@@ -11,11 +11,25 @@ async function postEditBrandName(req, res) {
     const brandId = req.params.id;
     const newValue = req.body.brandName;
     const response = await db.editBrand(brandId, newValue);
-    console.log(response);  
+
+    res.redirect('/brands');
+}
+
+async function deleteBrand(req, res) {
+    const brandId = req.params.id;
+    const response = await db.deleteBrand(brandId);
+    res.json({ response });
+}
+
+async function createBrand(req, res) {
+    const name = req.body.name;
+    const result = await db.createBrand(name);
     res.redirect('/brands');
 }
 
 module.exports = {
     getBrands,
-    postEditBrandName
+    postEditBrandName,
+    deleteBrand,
+    createBrand
 }

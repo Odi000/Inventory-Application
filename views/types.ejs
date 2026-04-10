@@ -7,23 +7,124 @@
   <div class="type-container">
     <% for(const el of bodyTypes) {%>
     <div class="type" data-id="<%= el.id  %>">
-      <a href="#"><button>Edit</button></a>
-      <a href="#"><button>Delete</button></a>
+      <button class="editBtn">Edit</button>
+      <button onclick="handleDelete(<%= el.id %>)">Delete</button>
       <p><%= el.name %></p>
     </div>
     <% } %>
+    <div class="create">
+      <button id="create">+</button>
+    </div>
   </div>
 </body>
 <script>
+  // Body type selection
   const typeElements = document.querySelectorAll('.type');
-  console.log([...typeElements])
+  typeElements.forEach(el => el.addEventListener('click', handleBodyTypeClick));
 
-  typeElements.forEach(el => el.addEventListener('click', showCars));
-
-  function showCars(e) {
+  function handleBodyTypeClick(e) {
     const bodyTypeID = e.currentTarget.dataset.id
-    if(e.target, e.target.localName === 'button') return;
+    if (e.target, e.target.localName === 'button') return;
     location.href = '/inventory/body-type/' + bodyTypeID;
+  }
+
+  // Body type create
+  const createBtn = document.getElementById('create');
+
+  createBtn.addEventListener('click', handleCreate);
+
+  function handleCreate(e) {
+    const parentNode = e.currentTarget.parentNode;
+    e.currentTarget.remove();
+
+    const form = document.createElement('form');
+    const input = document.createElement('input');
+    const submitBtn = document.createElement('button');
+    const cancel = document.createElement('button');
+
+    form.action = 'body-type/create/';
+    form.method = 'POST';
+    input.id = 'name';
+    input.name = 'name';
+    input.type = 'text';
+    submitBtn.textContent = 'Submit';
+    cancel.textContent = 'x';
+    cancel.type = 'button';
+    cancel.onclick = () => cancelCreate(parentNode, createBtn);
+
+    form.appendChild(input);
+    form.appendChild(submitBtn);
+    form.appendChild(cancel);
+
+    parentNode.appendChild(form);
+  }
+
+  function cancelCreate(parentNode, createBtn) {
+    parentNode.innerHTML = '';
+    parentNode.appendChild(createBtn);
+  }
+
+  // Body type edit
+  const editBtns = [...document.querySelectorAll('.editBtn')];
+  editBtns.forEach(el => el.addEventListener('click', handleEditClick));
+
+  let previousContainer = null;
+
+  function handleEditClick(e) {
+    const parentNode = e.currentTarget.parentNode;
+    parentNode.removeEventListener('click', handleBodyTypeClick);
+
+    if (previousContainer) {
+      previousContainer.ref.innerHTML = previousContainer.innerHTML;
+      previousContainer.ref.addEventListener('click', handleBodyTypeClick);
+      const editBtn = previousContainer.ref.querySelector('.editBtn');
+      editBtn.addEventListener('click', handleEditClick);
+    }
+
+    previousContainer = {
+      ref: parentNode,
+      innerHTML: parentNode.innerHTML
+    };
+
+    const currentValue = parentNode.childNodes[5].textContent;
+    const brandId = parentNode.dataset.id;
+
+    parentNode.innerHTML = '';
+    const form = document.createElement('form');
+    const input = document.createElement('input');
+    const submitBtn = document.createElement('button');
+
+    form.action = 'body-type/update/' + brandId;
+    form.method = 'POST';
+    input.id = 'bodyName';
+    input.name = 'bodyName';
+    input.type = 'text';
+    input.value = currentValue;
+    submitBtn.textContent = 'Submit';
+
+    form.appendChild(input);
+    form.appendChild(submitBtn);
+
+    parentNode.appendChild(form);
+  }
+
+  // Body type delete
+  async function handleDelete(bodyId) {
+    try {
+      let response = await fetch('body-type/delete/' + bodyId, {
+        method: 'DELETE'
+      })
+      result = (await response.json()).response;
+
+      if (result) {
+        const container = document.querySelector(`[data-id="${bodyId}"]`);
+        container.remove();
+      } else {
+        alert('Body type contains elements inside, delete all its elements before deleting the type!')
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 </script>
 

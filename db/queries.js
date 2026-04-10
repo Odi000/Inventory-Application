@@ -53,10 +53,54 @@ async function editBrand(brandId, newValue) {
     return await pool.query('UPDATE brands SET name = $2 WHERE id = $1', [brandId, newValue])
 }
 
+async function editBodyType(bodyId, newValue) {
+    return await pool.query('UPDATE body SET name = $2 WHERE id = $1', [bodyId, newValue])
+}
+
+async function deleteBodyType(bodyId) {
+    const length = (await filterByBody(bodyId)).rowCount;
+    let result = false;
+
+    if (!length) {
+        const response = await pool.query('DELETE FROM body WHERE id = $1', [bodyId]);
+        console.log(response);
+        result = true;
+    }
+
+    return result;
+}
+
+async function deleteBrand(brandId) {
+    const length = (await filterByBrand(brandId)).rowCount;
+    let result = false;
+
+    if (!length) {
+        const response = await pool.query('DELETE FROM brands WHERE id = $1', [brandId]);
+        console.log(response);
+        result = true;
+    }
+
+    return result;
+}
+
+async function createBodyType(name) {
+    return await pool.query('INSERT INTO body (name) VALUES ($1)', [name]);
+}
+
+async function createBrand(name) {
+    return await pool.query('INSERT INTO brands (name) VALUES ($1)', [name]);
+}
+
 module.exports = {
     getAllCars,
     getBodyTypes,
     filterByBody,
     getBrands,
-    filterByBrand,editBrand
+    filterByBrand,
+    editBrand,
+    editBodyType,
+    deleteBodyType,
+    deleteBrand,
+    createBodyType,
+    createBrand
 }

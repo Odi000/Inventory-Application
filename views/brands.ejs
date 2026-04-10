@@ -9,10 +9,14 @@
     <% for(const brand of brands) {%>
     <div class="type" data-id="<%= brand.id  %>">
       <button class="editBtn">Edit</button>
-      <button>Delete</button>
+      <button onclick="handleDelete(<%= brand.id %>)">Delete</button>
       <p><%= brand.name %></p>
     </div>
     <% } %>
+    <div class="create">
+      <button id="create">+</button>
+    </div>
+
   </div>
 
 </body>
@@ -28,13 +32,63 @@
     location.href = '/inventory/brands/' + brandID;
   }
 
+  // Body type create
+  const createBtn = document.getElementById('create');
+
+  createBtn.addEventListener('click', handleCreate);
+
+  function handleCreate(e) {
+    const parentNode = e.currentTarget.parentNode;
+    e.currentTarget.remove();
+
+    const form = document.createElement('form');
+    const input = document.createElement('input');
+    const submitBtn = document.createElement('button');
+    const cancel = document.createElement('button');
+
+    form.action = 'brands/create/';
+    form.method = 'POST';
+    input.id = 'name';
+    input.name = 'name';
+    input.type = 'text';
+    submitBtn.textContent = 'Submit';
+    cancel.textContent = 'x';
+    cancel.type = 'button';
+    cancel.onclick = () => cancelCreate(parentNode, createBtn);
+
+    form.appendChild(input);
+    form.appendChild(submitBtn);
+    form.appendChild(cancel);
+
+    parentNode.appendChild(form);
+  }
+
+  function cancelCreate(parentNode, createBtn) {
+    parentNode.innerHTML = '';
+    parentNode.appendChild(createBtn);
+  }
+
   //Brand edit 
   const editBtns = [...document.querySelectorAll('.editBtn')];
   editBtns.forEach(el => el.addEventListener('click', handleEditClick));
 
+  let previousContainer = null;
+
   function handleEditClick(e) {
     const parentNode = e.currentTarget.parentNode
     parentNode.removeEventListener('click', handleBrandClick);
+
+    if (previousContainer) {
+      previousContainer.ref.innerHTML = previousContainer.innerHTML;
+      previousContainer.ref.addEventListener('click', handleBrandClick);
+      const editBtn = previousContainer.ref.querySelector('.editBtn');
+      editBtn.addEventListener('click', handleEditClick);
+    }
+
+    previousContainer = {
+      ref: parentNode,
+      innerHTML: parentNode.innerHTML
+    };
 
     const currentValue = parentNode.childNodes[5].textContent;
     const brandId = parentNode.dataset.id;
@@ -56,6 +110,27 @@
     form.appendChild(submitBtn);
 
     parentNode.appendChild(form);
+  }
+
+  // Body type delete
+  async function handleDelete(brandId) {
+    try {
+      let response = await fetch('brands/delete/' + brandId, {
+        method: 'DELETE'
+      })
+      result = (await response.json()).response;
+
+      if (result) {
+        const container = document.querySelector(`[data-id="${brandId}"]`);
+        container.remove();
+      } else {
+        alert('This brand contains elements inside, delete all its elements before deleting the brand!')
+      }
+
+
+    } catch (error) {
+      console.log(error);
+    }
   }
 </script>
 
