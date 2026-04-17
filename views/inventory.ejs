@@ -7,8 +7,9 @@
   <section>
     <div class="filters"></div>
     <div class="categories">
-        <a href="/body-type"><button>Body type</button></a>
-        <a href="/brands"><button>Brand</button></a>
+      <a href="/body-type"><button>Body type</button></a>
+      <a href="/brands"><button>Brand</button></a>
+      <a href="/inventory/create"><button>New Car</button></a>
     </div>
     <div class="products">
       <table>
@@ -18,17 +19,26 @@
           <th scope="col">Delete</th>
           <% for(const prop in locals.products[0]){ %>
           <% const colName = prop[0].toUpperCase()+prop.slice(1) %>
+          <% if(prop === 'id') continue; %>
           <th scope="col"><%= colName %></th>
           <% } %>
         </thead>
         <tbody>
           <% for(const el of locals.products) {%>
-          <tr>
-            <td><div><img src="/images/pencil.png" alt="Edit"></div></td>
-            <td class="delete"><div><img src="/images/trash.png" alt="Deleteu"></div></td>
+          <tr data-id="<%= el.id  %>">
+            <td class="edit">
+              <a href="/inventory/edit/<%= el.id %>">
+                <div><img src="/images/pencil.png" alt="Edit"></div>
+              </a>
+            </td>
+            <td class="delete">
+              <div><img src="/images/trash.png" alt="Delete"></div>
+            </td>
             <% for(const prop in el) {%>
             <% if(prop==='price') {%>
             <td><%= '€ '+ el[prop] %></td>
+            <% }else if(prop==='id') { %>
+            <% continue; %>
             <% } else {%>
             <td><%= el[prop] %></td>
             <% } %>
@@ -40,5 +50,30 @@
     </div>
   </section>
 </body>
+<script>
+  // handle delete button
+  const deleteBtns = [...document.querySelectorAll('.delete')];
+  deleteBtns.forEach(btn => btn.addEventListener('click', handleDeleteClick));
+
+  async function handleDeleteClick(e) {
+    try {
+      const tableRow = e.currentTarget.parentNode;
+      const id = tableRow.dataset.id;
+      const answer = confirm('Are you sure you want to delte this car?');
+      if (!answer) return;
+
+      const response = await fetch('/inventory/delete/' + id, {
+        method: 'delete'
+      })
+      const result = await response.json();
+
+      if (!result) throw new Error('Delete failed');
+
+      tableRow.remove();
+    } catch (err) {
+      console.log('Error: ', err.message)
+    }
+  }
+</script>
 
 </html>

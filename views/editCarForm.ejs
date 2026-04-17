@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('htmlHead')  %>
+
+<body>
+
+  <div class="container">
+    <h1><%= title  %></h1>
+    <form action="/inventory/edit/<%= car.id  %>" method="post">
+      <div>
+        <label for="brand">Brand</label>
+        <select name="brand" id="brand">
+          <% for(const brand of brands) { %>
+          <option value="<%= brand.id %>"><%= brand.name %></option>
+          <% } %>
+        </select>
+      </div>
+      <div>
+        <label for="body">Body</label>
+        <select name="body" id="body">
+          <% for(const bodyType of bodyTypes) { %>
+          <option value="<%= bodyType.id %>"><%= bodyType.name %></option>
+          <% } %>
+        </select>
+      </div>
+      <div>
+        <label for="model">Model</label>
+        <input name="model" id="model" type="text" value="<%= car.model %>">
+      </div>
+      <div>
+        <label for="price">Price</label>
+        <input name="price" id="price" type="text" value="<%= car.price %>">
+      </div>
+      <button>Submit</button>
+      <a href="/inventory/"><button type="button">Cancel</button></a>
+    </form>
+  </div>
+
+</body>
+<script>
+  const selectBrand = document.getElementById('brand');
+  const selectBody = document.getElementById('body');
+  selectBrand.value = <%= car.brand_id %>
+  selectBody.value = <%= car.body_type_id %>
+</script>
+
+</html>

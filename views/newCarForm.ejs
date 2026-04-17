@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('htmlHead')  %>
+
+<body>
+
+  <div class="container">
+    <h1><%= title  %></h1>
+    <form action="/inventory/create" method="post">
+      <div>
+        <label for="brand">Brand</label>
+        <select name="brand" id="brand">
+          <% for(const brand of brands) { %>
+          <option value="<%= brand.id %>"><%= brand.name %></option>
+          <% } %>
+        </select>
+      </div>
+      <div>
+        <label for="body">Body</label>
+        <select name="body" id="body">
+          <% for(const bodyType of bodyTypes) { %>
+          <option value="<%= bodyType.id %>"><%= bodyType.name %></option>
+          <% } %>
+        </select>
+      </div>
+      <div>
+        <label for="model">Model</label>
+        <input name="model" id="model" type="text">
+      </div>
+      <div>
+        <label for="price">Price</label>
+        <input name="price" id="price" type="text">
+      </div>
+      <button>Submit</button>
+      <a href="/inventory/"><button type="button">Cancel</button></a>
+    </form>
+  </div>
+
+</body>
+
+</html>
