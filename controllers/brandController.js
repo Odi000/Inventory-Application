@@ -1,10 +1,12 @@
 const db = require('../db/queries');
 const title = "SM Auto Brands";
+const stylesheet = 'category-styles.css';
+
 
 async function getBrands(req, res) {
     const brands = (await db.getBrands()).rows;
 
-    res.render('brands', { title, brands });
+    res.render('brands', { title, brands, stylesheet });
 }
 
 async function postEditBrandName(req, res) {

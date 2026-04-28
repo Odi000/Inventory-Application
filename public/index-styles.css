@@ -1,0 +1,34 @@
+.content {
+    text-align: center;
+}
+
+h1 {
+    padding: 35px 0;
+    margin-bottom: 50px;
+}
+
+button {
+    border: 8px solid var(--color);
+    border-radius: 2px;
+    background-color: transparent;
+    color: var(--color);
+    font-size: 28px;
+    font-weight: bolder;
+    padding: 8px 20px;
+}
+
+button:hover {
+    background-color: var(--hover-bg-color);
+}
+
+.container {
+    padding: 100px 4px 40px;
+    display: flex;
+    gap: 16px;
+    fill: var(--hover-bg-color);
+    justify-content: center;
+}
+
+svg {
+    max-width: 180px;
+}

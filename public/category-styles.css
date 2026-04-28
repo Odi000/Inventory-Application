@@ -1,0 +1,116 @@
+h1 {
+    text-align: center;
+    padding: 35px 0 35px;
+}
+
+.type-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    padding: 10px 15vw 40px;
+    gap: 10px;
+}
+
+.type {
+    position: relative;
+    background-color: var(--bg-color);
+    height: 150px;
+    font-size: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.create {
+    height: 150px;
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.type:hover,
+.create:hover {
+    background-color: var(--hover-bg-color);
+}
+
+.editBtn,
+.deleteBtn {
+    background-color: var(--bg-color);
+    position: absolute;
+    --size: 0;
+    border: none;
+    padding: 6px 9px;
+    outline: 2px solid var(--main-bg-color);
+    transition: background .1s linear;
+}
+
+.editBtn {
+    top: var(--size);
+    left: var(--size);
+}
+
+.deleteBtn {
+    top: var(--size);
+    right: var(--size);
+}
+
+.type-container img {
+    width: 20px;
+}
+
+.type-container svg {
+    width: 40%;
+}
+
+/* Create New form element */
+
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input {
+    max-width: 90%;
+    background-color: var(--input-bg-color);
+    color: var(--color);
+    font-size: 18px;
+    border: none;
+    padding: 6px 12px;
+}
+
+input:focus {
+    outline: solid 2px var(--focus);
+}
+
+form div {
+    padding-top: 21px;
+    text-align: center;
+}
+
+button {
+    background-color: transparent;
+    border: none;
+    fill: var(--main-bg-color);
+}
+
+form button {
+    border: 2px solid var(--main-bg-color);
+    color: var(--color);
+    padding: 6px 12px;
+}
+
+form button:first-child {
+    margin-right: 4px;
+}
+
+.type button:active,
+.create form button:active {
+    outline: 2px solid var(--focus);
+}
+
+.type button:hover,
+.create form button:hover {
+    background-color: #ffffff33;
+}

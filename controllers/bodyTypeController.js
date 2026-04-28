@@ -1,10 +1,11 @@
 const db = require('../db/queries');
 const title = "SM Auto car types";
+const stylesheet = 'category-styles.css';
 
 async function getBodyTypes(req, res) {
     const bodyTypes = (await db.getBodyTypes()).rows;
 
-    res.render('types', { title, bodyTypes })
+    res.render('types', { title, bodyTypes, stylesheet })
 }
 
 async function postEditBodyType(req, res) {

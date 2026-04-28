@@ -4,6 +4,8 @@
 
 <body>
 
+  <%- include('nav')  %>
+
   <div class="container">
     <h1><%= title  %></h1>
     <form action="/inventory/edit/<%= car.id  %>" method="post">
@@ -31,8 +33,10 @@
         <label for="price">Price</label>
         <input name="price" id="price" type="text" value="<%= car.price %>">
       </div>
-      <button>Submit</button>
-      <a href="/inventory/"><button type="button">Cancel</button></a>
+      <div>
+        <button>Submit</button>
+        <a href="/inventory/"><button type="button">Cancel</button></a>
+      </div>
     </form>
   </div>
 

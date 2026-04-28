@@ -3,4 +3,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= locals.title %></title>
   <link rel="stylesheet" href="/styles.css">
+  <% if(locals.stylesheet) {%>
+  <link rel="stylesheet" href="/<%= locals.stylesheet  %>">
+  <% } %>
+  <link rel="icon" href="/images/smauto.png">
 </head>

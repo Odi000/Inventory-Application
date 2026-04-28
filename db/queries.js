@@ -2,7 +2,7 @@ const pool = require('./pool');
 
 async function getAllCars() {
     const query = `
-        SELECT model.id, model.name AS model, body.name AS body, brands.name AS brand, model.price
+        SELECT model.id, model.name AS model, brands.name AS brand, body.name AS body, model.price
         FROM model
         INNER JOIN body
         ON model.body_type_id = body.id
@@ -61,7 +61,7 @@ async function getBodyTypes() {
 
 async function filterByBody(bodyId) {
     const query = `
-        SELECT model.id, model.name AS model, body.name AS body, brands.name AS brand, model.price
+        SELECT model.id, model.name AS model, brands.name AS brand, body.name AS body, model.price
         FROM model
         INNER JOIN body
         ON model.body_type_id = body.id
@@ -75,7 +75,7 @@ async function filterByBody(bodyId) {
 
 async function filterByBrand(brandId) {
     const query = `
-        SELECT model.id, model.name AS model, body.name AS body, brands.name AS brand, model.price
+        SELECT model.id, model.name AS model, brands.name AS brand, body.name AS body, model.price
         FROM model
         INNER JOIN body
         ON model.body_type_id = body.id
@@ -112,7 +112,7 @@ async function deleteBodyType(bodyId) {
 }
 
 async function deleteCar(id) {
-    return (await pool.query('DELETE FROM model WHERE id = $1',[id])).rowCount
+    return (await pool.query('DELETE FROM model WHERE id = $1', [id])).rowCount
 }
 
 async function deleteBrand(brandId) {

@@ -1,5 +1,6 @@
 const db = require('../db/queries');
 const title = "SM Auto";
+const stylesheet = "car-form-styles.css";
 
 
 async function getAll(req, res) {
@@ -28,7 +29,7 @@ async function getEditForm(req, res) {
     const brands = (await db.getBrands()).rows;
     const bodyTypes = (await db.getBodyTypes()).rows;
 
-    res.render('editCarForm', { title, car, brands, bodyTypes })
+    res.render('editCarForm', { title, car, brands, bodyTypes, stylesheet })
 }
 
 async function postEditForm(req, res) {
@@ -44,7 +45,7 @@ async function getCreateCarForm(req, res) {
     const brands = (await db.getBrands()).rows;
     const bodyTypes = (await db.getBodyTypes()).rows;
 
-    res.render('newCarForm', { title, brands, bodyTypes });
+    res.render('newCarForm', { title, brands, bodyTypes, stylesheet });
 }
 
 async function postCreateCarForm(req, res) {
