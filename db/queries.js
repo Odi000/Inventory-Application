@@ -8,7 +8,7 @@ async function getAllCars() {
         ON model.body_type_id = body.id
         INNER JOIN brands
         ON model.brand_id = brands.id
-        ORDER BY id;
+        ORDER BY brand DESC;
     `;
 
     return await pool.query(query);

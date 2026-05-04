@@ -142,6 +142,27 @@ table .edit:hover {
     transition-timing-function: line;
 }
 
+/*Edit button 'a' element*/
+
+td.edit,td.delete {
+    cursor: pointer;
+}
+
+td.edit {
+    position: relative;
+}
+
+td>a{
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /* Home Page */
 
 

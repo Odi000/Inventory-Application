@@ -34,7 +34,7 @@
 
   function handleBodyTypeClick(e) {
     const bodyTypeID = e.currentTarget.dataset.id
-    if (e.target, e.target.localName === 'button') return;
+    if (e.target.localName === 'button' || e.target.localName === 'img') return;
     location.href = '/inventory/body-type/' + bodyTypeID;
   }
 

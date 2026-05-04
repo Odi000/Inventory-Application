@@ -37,7 +37,7 @@
 
   function handleBrandClick(e) {
     const brandID = e.currentTarget.dataset.id
-    if (e.target.localName === 'button') return;
+    if (e.target.localName === 'button' || e.target.localName === 'img') return;
     location.href = '/inventory/brands/' + brandID;
   }
 
@@ -128,7 +128,7 @@
 
     form.appendChild(input);
     form.appendChild(btnContainer);
-    
+
 
     parentNode.appendChild(form);
   }
